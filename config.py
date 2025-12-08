@@ -1,2 +1,2 @@
-Token = "7689614483:AAG5n7-NSiWPNh3XMYKIwF1aCXqKz_ljPho"
+Token = "TOKEN"
 DATABASE = "./Ubog/bas.db"
