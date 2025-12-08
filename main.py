@@ -16,14 +16,14 @@ def info(message):
     bot.send_message(message.chat.id,
 """
 Вот команды которые могут тебе помочь:
-
-/Vopros - отвтить на часто задоваемые вопросы
-/Komanda - запишет ваш запрос в базу данных и через кокоето время с вами свяжется спецыолист
+/question - отвтить на часто задоваемые вопросы
+/recording - запишет ваш запрос в базу данных и
+через кокоето время с вами свяжется спецыолист
 """)
 
 
 
-@bot.message_handler(commands=['Komanda'])
+@bot.message_handler(commands=['recording'])
 def soxr(message):
     bot.send_message(message.chat.id, "Напишиет ваш вопрос")
     manager.insert_project
@@ -39,9 +39,9 @@ def email(message):
     
 def soxpan(message,data):
     manager.insert_project([tuple(data)])
-    bot.send_message(message.chat.id, "Ожидайте ответ в течение 1-2 дней")
+    bot.send_message(message.chat.id, "Ожидайте ответ в течение 10-12 часов. Eсли ответ долго не приходит то отправте свой вопрос снова ")
         
-@bot.message_handler(commands=['Vopros'])
+@bot.message_handler(commands=['question'])
 def Rospis(message):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     btn1 = types.KeyboardButton("Как оформить заказ?")
@@ -50,15 +50,18 @@ def Rospis(message):
     btn4 = types.KeyboardButton("Как связаться с вашей технической поддержкой?")
     btn5 = types.KeyboardButton("Как отменить заказ?")
     btn6 = types.KeyboardButton("Как узнать информацию о доставке?")
-    markup.add(btn1, btn2, btn3, btn4, btn5, btn6)
+    btn7 = types.KeyboardButton("Отмена")
+    markup.add(btn1, btn2, btn3, btn4, btn5, btn6,btn7)
+
     
-    bot.send_message(message.chat.id, """Вот самые часто задаваемые вопросы:
-    1. Как оформить заказ?
-    2. Как узнать статус моего заказа?
-    3. Как отменить заказ?
-    4. Что делать, если товар пришел поврежденным?
-    5. Как связаться с вашей технической поддержкой?
-    6. Как узнать информацию о доставке?""", reply_markup=markup)
+    bot.send_message(message.chat.id, """Вот самые часто задаваемые вопросы.
+Выбери свой с помщью кнопки:
+1. Как оформить заказ?
+2. Как узнать статус моего заказа?
+3. Как отменить заказ?
+4. Что делать, если товар пришел поврежденным?
+5. Как связаться с вашей технической поддержкой?
+6. Как узнать информацию о доставке?""", reply_markup=markup)
     
     bot.register_next_step_handler(message, callback)
 
@@ -81,6 +84,12 @@ def callback(message):
 
     elif message.text.lower() == 'как узнать информацию о доставке?':
         bot.reply_to(message, 'Информацию о доставке вы можете найти на странице оформления заказа на нашем сайте. Там указаны доступные способы доставки и сроки.')
+
+    elif message.text.lower() == 'отмена':
+        bot.reply_to(message, 'Если у вас возникли трудности, используйте команду /info. Если вашего вопроса тут нет, введите команду /recording и следуйте инструкциям.')
+
+        
+
 if __name__ == '__main__':
     manager = DB_Managr(DATABASE)
     bot.infinity_polling()
