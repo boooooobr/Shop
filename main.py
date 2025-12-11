@@ -1,9 +1,9 @@
-from logic import DB_Managr
+from logic import DB_Manager
 from config import *
 from telebot import TeleBot
 from telebot import types
 
-bot = TeleBot('TOKEN')
+bot = TeleBot('7689614483:AAG5n7-NSiWPNh3XMYKIwF1aCXqKz_ljPho')
 
 @bot.message_handler(commands=['start'])
 def start_command(message):
@@ -16,7 +16,7 @@ def info(message):
     bot.send_message(message.chat.id,
 """
 Вот команды которые могут тебе помочь:
-/question - отвтить на часто задоваемые вопросы
+/question - ответить на часто задоваемые вопросы
 /recording - запишет ваш запрос в базу данных и
 через кокоето время с вами свяжется спецыолист
 """)
@@ -25,22 +25,23 @@ def info(message):
 
 @bot.message_handler(commands=['recording'])
 def soxr(message):
-    bot.send_message(message.chat.id, "Напишиет ваш вопрос")
-    manager.insert_project
+    bot.send_message(message.chat.id, "Напишите ваш вопрос.")
     bot.register_next_step_handler(message, email)
+
     
 def email(message):
     name = message.text
     user_id = message.from_user.id
-    data = [user_id, name]
-    bot.send_message(message.chat.id, "Напишите вашу почту для того что бы с вами мог связатся специолист")
+    bot.send_message(message.chat.id, "Напишите вашу почту для того чтобы с вами мог связаться специалист")
+    bot.register_next_step_handler(message, soxpan, user_id=user_id, name=name)
+
     
-    bot.register_next_step_handler(message,soxpan,data=data)
+def soxpan(message, user_id, name):
+    email = message.text  
+    data = [user_id, name, email] 
+    manager.insert_project(data)  
+    bot.send_message(message.chat.id, "Ожидайте ответ в течение 10-12 часов. Если ответ долго не приходит, то отправьте свой вопрос снова.")
     
-def soxpan(message,data):
-    manager.insert_project([tuple(data)])
-    bot.send_message(message.chat.id, "Ожидайте ответ в течение 10-12 часов. Eсли ответ долго не приходит то отправте свой вопрос снова ")
-        
 @bot.message_handler(commands=['question'])
 def Rospis(message):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
@@ -91,5 +92,5 @@ def callback(message):
         
 
 if __name__ == '__main__':
-    manager = DB_Managr(DATABASE)
+    manager = DB_Manager(DATABASE)
     bot.infinity_polling()
