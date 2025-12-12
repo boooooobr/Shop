@@ -1,7 +1,7 @@
 import pytest
 import sqlite3
 import os
-from logic import insert_project
+from Basic.logic import insert_project
 
 @pytest.fixture(scope="module")
 def setup_database():
