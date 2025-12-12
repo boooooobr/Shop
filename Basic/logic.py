@@ -18,7 +18,7 @@ class DB_Manager:
     def __execute(self, sql, data): #Метод который принимает три параметра
                 conn = sqlite3.connect(self.database) #Подключения к базе данных
                 with conn: #менеджер который обесппечивает коретное открытие коректный выполнения операций
-                        conn.execute(sql, data) #выполняет sql запрос с использыванием метода __executemany
+                        conn.execute(sql, data) #выполняет sql запрос с использыванием метода executemany
                 conn.commit() #сохраняет изменения в базе данных
     
     

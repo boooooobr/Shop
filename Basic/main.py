@@ -9,7 +9,7 @@ bot = TeleBot('7689614483:AAG5n7-NSiWPNh3XMYKIwF1aCXqKz_ljPho')
 def start_command(message):
     bot.send_message(message.chat.id, """Здравствуйте! Данный бот поможет ответить на ваши вопросы
 которые возниклы у вас во вермя заказа на интернет магазины "Все на свете". Команда
-/info поможет лучше разобратся как и что делать. 
+/info поможет лучше разобратся как и что делать 
 """)
 @bot.message_handler(commands=['info'])
 def info(message):
