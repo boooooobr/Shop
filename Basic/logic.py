@@ -13,7 +13,12 @@ class DB_Manager:
                 Vopros TEXT ,
                 Email TEXT
 
-)''')                                   
+)''')  
+                conn.execute('''CREATE TABLE ot  (
+                otzuv TEXT
+
+)''')             
+                      
                 conn.commit()
     def __execute(self, sql, data): #Метод который принимает три параметра
                 conn = sqlite3.connect(self.database) #Подключения к базе данных
@@ -25,6 +30,9 @@ class DB_Manager:
 
     def insert_project(self, data): #Метод который принимает два параметр
                 sql = 'INSERT OR IGNORE INTO Questions ( user_id,Vopros, Email) values(?,?,?)' #sql запрос который обращяется к табличке Questions и записывает туда параметры которые указына
+                self.__execute(sql, data,) #Вставляет данные в базу
+    def insert(self, data): #Метод который принимает два параметр
+                sql = 'INSERT OR IGNORE INTO ot (otzuv) values(?)' #sql запрос который обращяется к табличке Questions и записывает туда параметры которые указына
                 self.__execute(sql, data,) #Вставляет данные в базу
 
     

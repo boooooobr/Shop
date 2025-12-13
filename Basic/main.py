@@ -19,6 +19,7 @@ def info(message):
 /question - ответить на часто задоваемые вопросы
 /recording - запишет ваш запрос в базу данных и
 через кокоето время с вами свяжется спецыолист
+/otzuv - оставит ваш отзыв
 """)
 
 
@@ -41,6 +42,17 @@ def soxpan(message, user_id, name):
     data = [user_id, name, email] 
     manager.insert_project(data)  
     bot.send_message(message.chat.id, "Ожидайте ответ в течение 10-12 часов. Если ответ долго не приходит, то отправьте свой вопрос снова.")
+
+@bot.message_handler(commands=['otzuv'])
+def soxr(message):
+    bot.send_message(message.chat.id, "Напишите ваш отзыв")
+    bot.register_next_step_handler(message, otzix)
+
+def otzix(message):
+    otzuv = message.text  
+    data = [otzuv] 
+    manager.insert(data)  
+    bot.send_message(message.chat.id, "Спсибо за ваш отзыв.")
     
 @bot.message_handler(commands=['question'])
 def Rospis(message):
